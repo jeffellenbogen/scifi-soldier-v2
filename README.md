@@ -1,16 +1,5 @@
- 
+#SciFi Solder Makecode Arcade Game 
 
-
-> Open this page at [https://jeffellenbogen.github.io/scifi-soldier-v2/](https://jeffellenbogen.github.io/scifi-soldier-v2/)
-
-## Use as Extension
-
-This repository can be added as an **extension** in MakeCode.
-
-* open [https://arcade.makecode.com/](https://arcade.makecode.com/)
-* click on **New Project**
-* click on **Extensions** under the gearwheel menu
-* search for **https://github.com/jeffellenbogen/scifi-soldier-v2** and import
 
 ## Edit this project ![Build status badge](https://github.com/jeffellenbogen/scifi-soldier-v2/workflows/MakeCode/badge.svg)
 
