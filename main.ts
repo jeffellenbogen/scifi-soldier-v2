@@ -13,7 +13,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (timeSinceLastShot > shotDelay) {
         timeOfShot = game.runtime()
         projectile = sprites.createProjectileFromSprite(assets.image`Red Laser 1`, mySprite, 0, -130)
-        music.knock.play()
+        music.pewPew.play()
         if (info.score() > 0) {
             info.changeScoreBy(-1)
         }
@@ -70,7 +70,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     statusbar.value = 100
     otherSprite.destroy(effects.spray, 500)
     sprite.destroy(effects.disintegrate, 500)
-    music.pewPew.play()
+    music.zapped.play()
     if (info.life() > 0) {
         pause(1000)
         createShip()
