@@ -31,7 +31,6 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, oth
     music.smallCrash.play()
 })
 function createShip () {
-    pause(500)
     mySprite = sprites.create(assets.image`Ship2`, SpriteKind.Player)
     mySprite.startEffect(effects.halo, 500)
     mySprite.x = randint(5, 155)
@@ -56,12 +55,14 @@ function splashScreen () {
 }
 statusbars.onZero(StatusBarKind.Energy, function (status) {
     info.changeLifeBy(-1)
-    mySprite.destroy(effects.disintegrate, 200)
+    mySprite.destroy(effects.disintegrate, 500)
     for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
-        value.destroy()
+        value.destroy(effects.spray, 500)
     }
     music.zapped.play()
     if (info.life() > 0) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy, effects.spray, 500)
+        pause(500)
         createShip()
     }
 })
@@ -72,7 +73,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     sprite.destroy(effects.disintegrate, 500)
     music.zapped.play()
     if (info.life() > 0) {
-        pause(1000)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy, effects.spray, 500)
+        pause(500)
         createShip()
     }
 })
