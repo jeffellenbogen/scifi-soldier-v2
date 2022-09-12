@@ -55,14 +55,13 @@ function splashScreen () {
 }
 statusbars.onZero(StatusBarKind.Energy, function (status) {
     info.changeLifeBy(-1)
-    mySprite.destroy(effects.disintegrate, 500)
+    music.zapped.play()
+    mySprite.destroy()
     for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
         value.destroy(effects.spray, 500)
     }
-    music.zapped.play()
     if (info.life() > 0) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy, effects.spray, 500)
-        pause(500)
+        game.showLongText("OUT OF FUEL. EAT MORE DONUTS!", DialogLayout.Right)
         createShip()
     }
 })
@@ -85,8 +84,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 //  
 // 
 let fuel_tone = 0
-let myFuel: Sprite = null
 let myEnemy: Sprite = null
+let myFuel: Sprite = null
 let statusbar: StatusBarSprite = null
 let projectile: Sprite = null
 let timeOfShot = 0
@@ -103,23 +102,23 @@ effects.starField.startScreenEffect()
 let myEnemyCurrentVY = 50
 let enemySpawnTimer = 1500
 createShip()
+game.onUpdateInterval(5000, function () {
+    myFuel = sprites.createProjectileFromSide(assets.image`DonutFuel`, 0, 20)
+    myFuel.x = randint(5, 155)
+    myFuel.setKind(SpriteKind.Gas)
+})
 game.onUpdateInterval(enemySpawnTimer, function () {
     myEnemy = sprites.createProjectileFromSprite(assets.image`Ghost`, mySprite, randint(-10, 10), myEnemyCurrentVY * randint(0.8, 1.3))
     myEnemy.x = randint(5, 155)
     myEnemy.y = 0
     myEnemy.setKind(SpriteKind.Enemy)
 })
-game.onUpdateInterval(4000, function () {
-    myFuel = sprites.createProjectileFromSide(assets.image`DonutFuel`, 0, 20)
-    myFuel.x = randint(5, 155)
-    myFuel.setKind(SpriteKind.Gas)
-})
 game.onUpdateInterval(300, function () {
-    statusbar.value += -2
+    statusbar.value += -2.5
     if (info.life() <= 0) {
         game.over(false)
     }
-    if (statusbar.value < 25) {
+    if (statusbar.value < 30) {
         music.playTone(fuel_tone, music.beat(BeatFraction.Sixteenth))
         fuel_tone += -5
     } else {
